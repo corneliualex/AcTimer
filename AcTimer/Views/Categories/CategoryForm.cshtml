@@ -1,0 +1,17 @@
+﻿@model AcTimer.Models.Category
+@{
+    ViewBag.Title = "CategoryForm";
+}
+
+<h2>CategoryForm</h2>
+
+@using (Html.BeginForm("Save", "Categories", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(c => c.Name)
+        @Html.TextBoxFor(c => c.Name, htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    @Html.HiddenFor(c => c.Id)
+    <input type="submit" value="Save" />
+}

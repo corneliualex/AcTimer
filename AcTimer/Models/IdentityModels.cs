@@ -24,6 +24,10 @@ namespace AcTimer.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Activity> Activities { get; set; }
+        //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
