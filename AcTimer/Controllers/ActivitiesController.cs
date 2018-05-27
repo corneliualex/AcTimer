@@ -56,6 +56,7 @@ namespace AcTimer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Activity activity)
         {
             if (!ModelState.IsValid)

@@ -32,6 +32,7 @@
                 </div>
 
                 @Html.HiddenFor(a => a.Id)
+                @Html.AntiForgeryToken()
                 <input type="submit" value="Submit" class="btn btn-primary" />
             }
         </div>
