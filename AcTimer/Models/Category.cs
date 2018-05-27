@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -24,5 +25,9 @@ namespace AcTimer.Models
             DateAdded = DateTime.Now;
             ApplicationUserId = HttpContext.Current.User.Identity.GetUserId();
         }
+
+        /******************** Not mapped properties *****************************/
+        [NotMapped]
+        public string ViewTitle { get { return Id == 0 ? "New" : "Edit"; } }
     }
 }

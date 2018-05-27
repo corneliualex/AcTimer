@@ -3,7 +3,7 @@
     ViewBag.Title = "CategoryForm";
 }
 
-<h2>CategoryForm</h2>
+<h2>@Model.ViewTitle</h2>
 
 @using (Html.BeginForm("Save", "Categories", FormMethod.Post))
 {

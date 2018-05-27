@@ -4,7 +4,7 @@
     ViewBag.Title = "ActivityForm";
 }
 
-<h2>ActivityForm</h2>
+<h2>@Model.ViewTitle</h2>
 
 @using (Html.BeginForm("Save", "Activities", FormMethod.Post))
 {

@@ -66,11 +66,11 @@ namespace AcTimer.Controllers
                 activityInDb.Description = activity.Description;
                 activityInDb.Date = activity.Date;
                 activityInDb.TimeSpent = activity.TimeSpent;
+                activityInDb.CategoryId = activity.CategoryId;
             }
             _context.SaveChanges();
             return RedirectToAction("Index", "Activities");
         }
-
 
     }
 }
