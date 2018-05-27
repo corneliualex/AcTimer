@@ -21,7 +21,12 @@ namespace AcTimer.Controllers
 
         public ActionResult Details(int? id)
         {
-            return View();
+            if (id == null) return HttpNotFound();
+
+            var activity = _context.Activities.Include(c => c.Category).Include(u => u.ApplicationUser).SingleOrDefault(a => a.Id == id);
+            if (activity == null) return HttpNotFound();
+
+            return View(activity);
         }
 
         public ActionResult Edit(int? id)
