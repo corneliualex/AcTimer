@@ -1,0 +1,30 @@
+﻿@model AcTimer.ViewModels.ActivityFormViewModel
+
+@{
+    ViewBag.Title = "ActivityForm";
+}
+
+<h2>@Model.ViewTitle</h2>
+
+@using (Html.BeginForm("Save", "Activities", FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.LabelFor(a => a.Description)
+        @Html.TextBoxFor(a => a.Description, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.Date)
+        @Html.TextBoxFor(a => a.Date, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.TimeSpent)
+        @Html.TextBoxFor(a => a.TimeSpent, htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(a => a.CategoryId)
+        @Html.DropDownListFor(a => a.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select category", htmlAttributes: new { @class = "form-control" })
+    </div>
+
+    @Html.HiddenFor(a => a.Id)
+    <input type="submit" value="Submit" />
+}

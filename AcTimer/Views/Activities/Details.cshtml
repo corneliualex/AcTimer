@@ -1,0 +1,13 @@
+﻿@model AcTimer.Models.Activity
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<ul>
+    <li>@Model.Category.Name</li>
+    <li>@Model.TimeSpent</li>
+    <li>@Model.Description</li>
+    <li>@Html.DisplayFor(c => Model.Date)</li>
+</ul>
