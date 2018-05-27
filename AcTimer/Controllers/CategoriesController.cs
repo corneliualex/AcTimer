@@ -48,6 +48,7 @@ namespace AcTimer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         //authorize admin & moderator
         public ActionResult Save(Category category)
         {

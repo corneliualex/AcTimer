@@ -58,6 +58,16 @@ namespace AcTimer.Controllers
         [HttpPost]
         public ActionResult Save(Activity activity)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ActivityFormViewModel(activity)
+                {
+                    Categories = _context.Categories.ToList()
+                };
+
+                return View("ActivityForm",viewModel);
+            }
+
             if (activity.Id == 0) _context.Activities.Add(activity);
             else
             {
