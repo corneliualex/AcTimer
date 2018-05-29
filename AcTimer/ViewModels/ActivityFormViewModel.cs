@@ -24,7 +24,7 @@ namespace AcTimer.ViewModels
 
         [Required]
         [Display(Name = "Time spent")]
-        [RegularExpression(@"\d{2}:\d{2}|\d:\d{2}",ErrorMessage = "The field Time spent must be hour:minutes format")]
+        [RegularExpression(@"([01]?[0-9]|2[0-3]):[0-5][0-9]", ErrorMessage = "Invalid hour")]
         public TimeSpan? TimeSpent { get; set; }
 
         [Required]

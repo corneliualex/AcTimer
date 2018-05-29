@@ -16,12 +16,10 @@ namespace AcTimer.Models
         public string Description { get; set; }
 
         [Required]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Date { get; set; }
 
         [Required]
         [Display(Name ="Time spent")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:H:m}")]
         public TimeSpan TimeSpent { get; set; }
 
         //fk + nav prop => one to many. many activities have a category
