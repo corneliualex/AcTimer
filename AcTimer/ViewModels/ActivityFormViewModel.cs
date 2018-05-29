@@ -1,6 +1,7 @@
 ﻿using AcTimer.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,22 +9,32 @@ namespace AcTimer.ViewModels
 {
     public class ActivityFormViewModel
     {
-        //public Activity Activity { get; set; }
         public IEnumerable<Category> Categories { get; set; }
 
+        //public Activity Activity { get; set; }
+        //properties used in Activity Model
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
         public string Description { get; set; }
-        public DateTime Date { get; set; }
-        public TimeSpan TimeSpent { get; set; }
 
-        //fk + nav prop => one to many. many activities have a category
+        [Required]
+        public DateTime? Date { get; set; }
+
+        [Required]
+        [Display(Name = "Time spent")]
+        [RegularExpression(@"([01]?[0-9]|2[0-3]):[0-5][0-9]", ErrorMessage = "Invalid hour")]
+        public TimeSpan? TimeSpent { get; set; }
+
+        [Required]
+        [Display(Name = "Category")]
         public int CategoryId { get; set; }
+
+        [Required]
+        [Display(Name = "User")]
         public string ApplicationUserId { get; private set; }
-
-        //fk + nav prop => one to many. many activities are created by an user
-        //public Category Category { get; set; }
-        //public ApplicationUser ApplicationUser { get; set; }
-
+           
         public string ViewTitle { get { return Id == 0 ? "New" : "Edit"; } }
 
         public ActivityFormViewModel()

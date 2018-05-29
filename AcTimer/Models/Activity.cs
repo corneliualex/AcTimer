@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,8 +10,16 @@ namespace AcTimer.Models
     public class Activity
     {
         public int Id { get; set; }
+
+        [Required]
+        [StringLength(200)]
         public string Description { get; set; }
+
+        [Required]
         public DateTime Date { get; set; }
+
+        [Required]
+        [Display(Name ="Time spent")]
         public TimeSpan TimeSpent { get; set; }
 
         //fk + nav prop => one to many. many activities have a category

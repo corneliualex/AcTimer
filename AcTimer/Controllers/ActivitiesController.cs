@@ -16,8 +16,8 @@ namespace AcTimer.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            IEnumerable<Activity> categories = _context.Activities.Include(c => c.Category).Include(u => u.ApplicationUser).ToList();
-            return View(categories);
+            IEnumerable<Activity> activities = _context.Activities.Include(c => c.Category).Include(u => u.ApplicationUser).ToList();
+            return View(activities);
         }
 
         public ActionResult Details(int? id)
@@ -45,6 +45,18 @@ namespace AcTimer.Controllers
             return View("ActivityForm", viewModel);
         }
 
+        public ActionResult Delete(int? id)
+        {
+            if (id == null) return HttpNotFound();
+            var activity = _context.Activities.SingleOrDefault(a => a.Id == id);
+            if (activity == null) return HttpNotFound();
+
+            _context.Activities.Remove(activity);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index","Activities");
+        }
+
         public ActionResult New()
         {
             var viewModel = new ActivityFormViewModel()
@@ -56,8 +68,19 @@ namespace AcTimer.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Save(Activity activity)
         {
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new ActivityFormViewModel(activity)
+                {
+                    Categories = _context.Categories.ToList()
+                };
+
+                return View("ActivityForm",viewModel);
+            }
+
             if (activity.Id == 0) _context.Activities.Add(activity);
             else
             {

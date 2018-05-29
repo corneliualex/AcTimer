@@ -187,6 +187,18 @@
     <Compile Include="Migrations\201805261540252_DbChanges.Designer.cs">
       <DependentUpon>201805261540252_DbChanges.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201805271646192_Update_CategoryModel.cs" />
+    <Compile Include="Migrations\201805271646192_Update_CategoryModel.Designer.cs">
+      <DependentUpon>201805271646192_Update_CategoryModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805271717426_Update_ActivityModel.cs" />
+    <Compile Include="Migrations\201805271717426_Update_ActivityModel.Designer.cs">
+      <DependentUpon>201805271717426_Update_ActivityModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805271815240_Update_PropertyConstraintsForModels.cs" />
+    <Compile Include="Migrations\201805271815240_Update_PropertyConstraintsForModels.Designer.cs">
+      <DependentUpon>201805271815240_Update_PropertyConstraintsForModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
@@ -279,6 +291,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201805261540252_DbChanges.resx">
       <DependentUpon>201805261540252_DbChanges.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805271646192_Update_CategoryModel.resx">
+      <DependentUpon>201805271646192_Update_CategoryModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805271717426_Update_ActivityModel.resx">
+      <DependentUpon>201805271717426_Update_ActivityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805271815240_Update_PropertyConstraintsForModels.resx">
+      <DependentUpon>201805271815240_Update_PropertyConstraintsForModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

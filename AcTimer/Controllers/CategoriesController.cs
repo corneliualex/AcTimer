@@ -47,7 +47,20 @@ namespace AcTimer.Controllers
             return View("CategoryForm", category);
         }
 
+        //authorize admin & moderator
+        public ActionResult Delete(int ?id)
+        {
+            if (id == null) HttpNotFound();
+            var category = _context.Categories.SingleOrDefault(c => c.Id == id);
+            if (category == null) return HttpNotFound();
+
+            _context.Categories.Remove(category);
+            _context.SaveChanges();
+            return RedirectToAction("Index","Categories");
+        }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         //authorize admin & moderator
         public ActionResult Save(Category category)
         {
