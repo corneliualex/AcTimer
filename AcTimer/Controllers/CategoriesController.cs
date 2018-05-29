@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using AcTimer.Services.EntityRepository;
 
 namespace AcTimer.Controllers
 {
@@ -13,6 +14,7 @@ namespace AcTimer.Controllers
     public class CategoriesController : Controller
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
+        private IEntityRepository<Category> repository = new CategoryRepository();
 
         // GET: Categories
         public ActionResult Index()
@@ -39,10 +41,8 @@ namespace AcTimer.Controllers
         //authorize admin & moderator
         public ActionResult Edit(int? id)
         {
-            if (id == null) { return HttpNotFound(); }
-
-            var category = _context.Categories.SingleOrDefault(c => c.Id == id);
-            if (category == null) { return HttpNotFound(); }
+            var category = repository.getById(id);
+            if (category == null) return HttpNotFound();
 
             return View("CategoryForm", category);
         }
@@ -57,6 +57,12 @@ namespace AcTimer.Controllers
             _context.Categories.Remove(category);
             _context.SaveChanges();
             return RedirectToAction("Index","Categories");
+        }
+
+        //will add in this view a complete view for the authorized methods
+        public ActionResult Dashboard()
+        {
+            return View(_context.Categories.Include(u => u.ApplicationUser).ToList());
         }
 
         [HttpPost]
