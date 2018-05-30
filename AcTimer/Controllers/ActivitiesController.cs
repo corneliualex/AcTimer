@@ -12,8 +12,8 @@ namespace AcTimer.Controllers
 {
     public class ActivitiesController : Controller
     {
-        private ApplicationDbContext _context = new ApplicationDbContext();
-        private IEntityRepository<Activity> _activityRepository = new ActivityRepository();
+        private ActivityRepository _activityRepository = new ActivityRepository();
+
 
         // GET: Activities
         public ActionResult Index()
@@ -32,14 +32,11 @@ namespace AcTimer.Controllers
 
         public ActionResult Edit(int? id)
         {
-            var activity = _activityRepository.GetById(id);
-            if (activity == null) return HttpNotFound();
+            //var activity = _activityRepository.GetById(id);
+            //if (activity == null) return HttpNotFound();
 
-            var viewModel = new ActivityFormViewModel(activity)
-            {
-                Categories = _context.Categories.ToList()
-            };
-
+            var viewModel = _activityRepository.ActivityFormVM(id);
+            
             return View("ActivityForm", viewModel);
         }
 
@@ -53,11 +50,8 @@ namespace AcTimer.Controllers
 
         public ActionResult New()
         {
-            var viewModel = new ActivityFormViewModel()
-            {
-                Categories = _context.Categories.ToList()
-            };
-
+            var viewModel = _activityRepository.ActivityFormVM();
+       
             return View("ActivityForm",viewModel);
         }
 
@@ -67,10 +61,7 @@ namespace AcTimer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                var viewModel = new ActivityFormViewModel(activity)
-                {
-                    Categories = _context.Categories.ToList()
-                };
+                var viewModel = _activityRepository.ActivityFormVM(activity);
 
                 return View("ActivityForm",viewModel);
             }

@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using AcTimer.ViewModels;
+
 namespace AcTimer.Services.EntityRepository
 {
     public class ActivityRepository : IEntityRepository<Activity>
@@ -47,5 +49,37 @@ namespace AcTimer.Services.EntityRepository
             }
             _context.SaveChanges();
         }
+
+        public ActivityFormViewModel ActivityFormVM()
+        {
+            var viewModel = new ActivityFormViewModel()
+            {
+                Categories = _context.Categories.ToList()
+            };
+
+            return viewModel;
+        }
+
+        public ActivityFormViewModel ActivityFormVM(int? id)
+        {
+            var viewModel = new ActivityFormViewModel(GetById(id))
+            {
+                Categories = _context.Categories.ToList()
+            };
+
+            return viewModel;
+        }
+
+        public ActivityFormViewModel ActivityFormVM(Activity activity)
+        {
+            var viewModel = new ActivityFormViewModel(activity)
+            {
+                Categories = _context.Categories.ToList()
+            };
+
+            return viewModel;
+        }
+
+
     }
 }
