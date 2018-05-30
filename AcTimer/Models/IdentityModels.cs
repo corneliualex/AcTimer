@@ -29,7 +29,7 @@ namespace AcTimer.Models
         //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("AcTimderDbContext", throwIfV1Schema: false)
         {
         }
 

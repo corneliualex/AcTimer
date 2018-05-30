@@ -23,6 +23,8 @@ namespace AcTimer.Models
         public string ApplicationUserId { get; private set; }
         public ApplicationUser ApplicationUser { get; set; }
 
+        public ICollection<Activity> Activities { get; set; }
+
         public Category()
         {
             DateAdded = DateTime.Now;
