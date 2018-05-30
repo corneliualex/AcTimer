@@ -6,25 +6,25 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using AcTimer.ViewModels;
+using AcTimer.Services.EntityRepository;
 
 namespace AcTimer.Controllers
 {
     public class ActivitiesController : Controller
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
+        private IEntityRepository<Activity> _activityRepository = new ActivityRepository();
 
         // GET: Activities
         public ActionResult Index()
         {
-            IEnumerable<Activity> activities = _context.Activities.Include(c => c.Category).Include(u => u.ApplicationUser).ToList();
+            var activities = _activityRepository.GetAll();
             return View(activities);
         }
 
         public ActionResult Details(int? id)
         {
-            if (id == null) return HttpNotFound();
-
-            var activity = _context.Activities.Include(c => c.Category).Include(u => u.ApplicationUser).SingleOrDefault(a => a.Id == id);
+            var activity = _activityRepository.GetById(id);
             if (activity == null) return HttpNotFound();
 
             return View(activity);
@@ -32,9 +32,7 @@ namespace AcTimer.Controllers
 
         public ActionResult Edit(int? id)
         {
-            if (id == null) return HttpNotFound();
-
-            var activity = _context.Activities.Include(c => c.Category).Include(u => u.ApplicationUser).SingleOrDefault(a => a.Id == id);
+            var activity = _activityRepository.GetById(id);
             if (activity == null) return HttpNotFound();
 
             var viewModel = new ActivityFormViewModel(activity)
@@ -47,13 +45,9 @@ namespace AcTimer.Controllers
 
         public ActionResult Delete(int? id)
         {
-            if (id == null) return HttpNotFound();
-            var activity = _context.Activities.SingleOrDefault(a => a.Id == id);
-            if (activity == null) return HttpNotFound();
-
-            _context.Activities.Remove(activity);
-            _context.SaveChanges();
-
+            var activityIsDeleted = _activityRepository.IsDeleted(id);
+            if (activityIsDeleted ==  false) return HttpNotFound();
+          
             return RedirectToAction("Index","Activities");
         }
 
@@ -81,17 +75,8 @@ namespace AcTimer.Controllers
                 return View("ActivityForm",viewModel);
             }
 
-            if (activity.Id == 0) _context.Activities.Add(activity);
-            else
-            {
-                var activityInDb = _context.Activities.SingleOrDefault(a => a.Id == activity.Id);
-
-                activityInDb.Description = activity.Description;
-                activityInDb.Date = activity.Date;
-                activityInDb.TimeSpent = activity.TimeSpent;
-                activityInDb.CategoryId = activity.CategoryId;
-            }
-            _context.SaveChanges();
+            _activityRepository.NewOrUpdate(activity);
+           
             return RedirectToAction("Index", "Activities");
         }
 

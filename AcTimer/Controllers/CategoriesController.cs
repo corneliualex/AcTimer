@@ -25,7 +25,7 @@ namespace AcTimer.Controllers
 
         public ActionResult Details(int? id)
         {
-            var category = _categoryRepository.GetDetails(id);
+            var category = _categoryRepository.GetById(id);
             if (category == null) return HttpNotFound();
 
             return View(category);
@@ -52,7 +52,7 @@ namespace AcTimer.Controllers
         [Authorize(Roles = "Admin,Moderator")]
         public ActionResult Delete(int ?id)
         {
-            if (_categoryRepository.Delete(id) == false) return HttpNotFound();
+            if (_categoryRepository.IsDeleted(id) == false) return HttpNotFound();
 
             return RedirectToAction("Dashboard","Categories");
         }

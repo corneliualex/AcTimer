@@ -9,9 +9,8 @@ namespace AcTimer.Services.EntityRepository
     public interface IEntityRepository<T> where T : class
     {
         T GetById(int? id);
-        T GetDetails(int? id);
         IEnumerable<T> GetAll();
-        bool Delete(int? id);
+        bool IsDeleted(int? id);
         void NewOrUpdate(T T);
     }
 }

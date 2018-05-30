@@ -18,21 +18,14 @@ namespace AcTimer.Services.EntityRepository
 
             return _context.Categories.Include(u => u.ApplicationUser).Include(a => a.Activities).SingleOrDefault(c => c.Id == id);
         }
-
-        public Category GetDetails(int? id)
-        {
-            if (id == null) { return null; }
-
-            return GetById(id);
-        }
-
+        
         //INCLUDE ALL NAV PROPERTIES FROM CATEGORY MODEL TO AVOID NULL REFERENCE
         public IEnumerable<Category> GetAll()
         {
             return _context.Categories.Include(u => u.ApplicationUser).Include(a => a.Activities).ToList();
         }
 
-        public bool Delete(int? id)
+        public bool IsDeleted(int? id)
         {
             var category = GetById(id);
             if (category == null) return false;
