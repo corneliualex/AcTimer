@@ -6,73 +6,74 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using AcTimer.Services.EntityRepository;
 
 namespace AcTimer.Controllers
 {
     [Authorize]
     public class CategoriesController : Controller
     {
-        private ApplicationDbContext _context = new ApplicationDbContext();
+        ///private ApplicationDbContext _context = new ApplicationDbContext();
+        private IEntityRepository<Category> _categoryRepository = new CategoryRepository();
 
         // GET: Categories
         public ActionResult Index()
         {
-            return View(_context.Categories.Include(u => u.ApplicationUser).ToList());
+            var categories = _categoryRepository.GetAll();
+            return View(categories);
         }
 
         public ActionResult Details(int? id)
         {
-            if(id == null) { return HttpNotFound(); }
+            var category = _categoryRepository.GetById(id);
+            if (category == null) return HttpNotFound();
 
-            var category = _context.Categories.Include(u => u.ApplicationUser).SingleOrDefault(c => c.Id == id);
-            if(category == null) { return HttpNotFound(); }
-                      
             return View(category);
         }
 
         //authorize admin & moderator
+        [Authorize(Roles ="Admin,Moderator")]
         public ActionResult New()
         {
             return View("CategoryForm", new Category());
         }
 
         //authorize admin & moderator
+        [Authorize(Roles = "Admin,Moderator")]
         public ActionResult Edit(int? id)
         {
-            if (id == null) { return HttpNotFound(); }
-
-            var category = _context.Categories.SingleOrDefault(c => c.Id == id);
-            if (category == null) { return HttpNotFound(); }
+            var category = _categoryRepository.GetById(id);
+            if (category == null) return HttpNotFound();
 
             return View("CategoryForm", category);
         }
 
         //authorize admin & moderator
+        [Authorize(Roles = "Admin,Moderator")]
         public ActionResult Delete(int ?id)
         {
-            if (id == null) HttpNotFound();
-            var category = _context.Categories.SingleOrDefault(c => c.Id == id);
-            if (category == null) return HttpNotFound();
+            if (_categoryRepository.IsDeleted(id) == false) return HttpNotFound();
 
-            _context.Categories.Remove(category);
-            _context.SaveChanges();
-            return RedirectToAction("Index","Categories");
+            return RedirectToAction("Dashboard","Categories");
         }
 
+        //will add in this view a complete view for the authorized methods
+        [Authorize(Roles = "Admin,Moderator")]
+        public ActionResult Dashboard()
+        {
+            var categories = _categoryRepository.GetAll();
+            return View(categories);
+        }
+
+        //authorize admin & moderator
         [HttpPost]
         [ValidateAntiForgeryToken]
-        //authorize admin & moderator
+        [Authorize(Roles = "Admin,Moderator")]
         public ActionResult Save(Category category)
         {
-            if (category.Id == 0) { _context.Categories.Add(category); }
-            else
-            {
-                var categoryInDb = _context.Categories.Single(c => c.Id == category.Id);
-                categoryInDb.Name = category.Name;
-            }
-            _context.SaveChanges();
-
-            return RedirectToAction("Index");
+            _categoryRepository.NewOrUpdate(category);
+           
+            return RedirectToAction("Dashboard");
         }
     }
 }
