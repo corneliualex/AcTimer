@@ -4,43 +4,74 @@
     ViewBag.Title = "ActivityForm";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12"><h2>@Model.ViewTitle</h2></div>
-        <div class="col-lg-12">
-            @using (Html.BeginForm("Save", "Activities", FormMethod.Post))
-            {
-                <div class="form-group">
-                    @Html.LabelFor(a => a.Description)
-                    @Html.TextBoxFor(a => a.Description, htmlAttributes: new { @class = "form-control", @placeholder = "required" })
-                    @Html.ValidationMessageFor(a => a.Description)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(a => a.Date)
-                    @Html.TextBoxFor(a => a.Date, htmlAttributes: new { @class = "form-control", @placeholder = "ex: 10 Aug 1995" })
-                    @Html.ValidationMessageFor(a => a.Date)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(a => a.TimeSpent)
-                    @Html.TextBoxFor(a => a.TimeSpent, "{0:hh\\:mm}", htmlAttributes: new { @class = "form-control", @placeholder = "ex: 1:30" })
-                    @Html.ValidationMessageFor(a => a.TimeSpent)
-                </div>
-                <div class="form-group">
-                    @Html.LabelFor(a => a.CategoryId)
-                    @Html.DropDownListFor(a => a.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "Select category", htmlAttributes: new { @class = "form-control" })
-                    @Html.ValidationMessageFor(a => a.CategoryId)
-                </div>
+<h2>Activity</h2>
+@using (Html.BeginForm("Save", "Activities", FormMethod.Post))
+{ @Html.AntiForgeryToken()
 
-                @Html.HiddenFor(a => a.Id)
-                @Html.AntiForgeryToken()
-                <input type="submit" value="Submit" class="btn btn-primary" />
-            }
+    <div class="form-horizontal">
+        <h4>@Model.ViewTitle</h4>
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Description, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Name"), "select category", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Date, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Date, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TimeSpent, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.TimeSpent, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.TimeSpent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.HiddenFor(model => model.Id)
+                @Html.HiddenFor(model => model.ApplicationUserId)
+                <input type="submit" class="btn btn-default" value="Save" />
+            </div>
         </div>
     </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
 </div>
-
-
 
 @section scripts{
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+<script type="text/javascript">
+    $(function () {
+        $('#Date').datetimepicker({
+            format: "MM/DD/YYYY"
+        }).on('dp.change', function (e) {
+            $(this).data('DateTimePicker').hide();
+        });
+    });
+</script>
+
+
+
+
+

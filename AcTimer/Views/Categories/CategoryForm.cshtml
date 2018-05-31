@@ -3,27 +3,34 @@
     ViewBag.Title = "CategoryForm";
 }
 
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12"><h2>@Model.ViewTitle Category</h2></div>
-        <div class="col-lg-12">
+<h2>Category</h2>
+@using (Html.BeginForm("Save", "Categories", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <h4>@Model.ViewTitle</h4>
+        <hr />
 
-            @using (Html.BeginForm("Save", "Categories", FormMethod.Post))
-            {
-                <div class="form-group">
-                    @Html.LabelFor(c => c.Name)
-                    @Html.TextBoxFor(c => c.Name, htmlAttributes: new { @class = "form-control", @placeholder = "required" })
-                    @Html.ValidationMessageFor(c => c.Name)
-                </div>
-
-                @Html.HiddenFor(c => c.Id)
-                @Html.AntiForgeryToken()
-                <input type="submit" value="Save" class="btn btn-primary" />
-            }
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.Name, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-</div>
 
-@section scripts{
-    @Scripts.Render("~/bundles/jqueryval")
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                @Html.HiddenFor(c => c.Id)
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
 }
+<div>
+    @Html.ActionLink("Back to List", "Dashboard")
+</div>
+    @section scripts{
+        @Scripts.Render("~/bundles/jqueryval")
+    }
