@@ -13,6 +13,7 @@
                 <thead>
                     <tr>
                         <th scope="col"></th>
+                        <th scope="col"></th>
                         <th scope="col">Category</th>
                         <th scope="col">Time Spent (h)</th>
                         <th scope="col">Description</th>
@@ -25,6 +26,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
+                            <td>@item.ApplicationUser.UserName</td>
                             <td>@Html.ActionLink("View", "Details", routeValues: new { @id = item.Id })</td>
                             <td>@item.Category.Name</td>
                             <td>@item.TimeSpent.ToString(@"hh\:mm")</td>

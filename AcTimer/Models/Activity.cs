@@ -24,16 +24,11 @@ namespace AcTimer.Models
 
         //fk + nav prop => one to many. many activities have a category
         public int CategoryId { get; set; }
-        public string ApplicationUserId { get; private set; }
+        public string ApplicationUserId { get; set; }
 
         //fk + nav prop => one to many. many activities are created by an user
         public Category Category { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-
-        public Activity()
-        {
-            ApplicationUserId = HttpContext.Current.User.Identity.GetUserId();
-        }
     }
 }

@@ -71,8 +71,8 @@ namespace AcTimer.Controllers
         [Authorize(Roles = "Admin,Moderator")]
         public ActionResult Save(Category category)
         {
-            _categoryRepository.NewOrUpdate(category);
-           
+            if (_categoryRepository.IsNewOrUpdate(category) == false) return HttpNotFound();
+
             return RedirectToAction("Dashboard");
         }
     }
