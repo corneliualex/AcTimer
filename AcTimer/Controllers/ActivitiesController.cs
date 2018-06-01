@@ -19,7 +19,7 @@ namespace AcTimer.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            var activities = _activityRepository.GetAll();
+            var activities = _activityRepository.GetAllForeachUser();
             return View(activities);
         }
 
@@ -69,5 +69,12 @@ namespace AcTimer.Controllers
             return RedirectToAction("Index", "Activities");
         }
 
+        [Authorize(Roles =("Admin,Moderator"))]
+        public ActionResult Dashboard()
+        {
+            var activities = _activityRepository.GetAll();
+
+            return View(activities);
+        }
     }
 }

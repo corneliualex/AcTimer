@@ -372,6 +372,7 @@
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\ActivityForm.cshtml" />
     <Content Include="Views\Categories\Dashboard.cshtml" />
+    <Content Include="Views\Activities\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
