@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using AcTimer.ViewModels;
 using AcTimer.Services.EntityRepository;
+using AcTimer.Services.Filtering;
+using AcTimer.Services.Filtering.Activities.Specification;
+using AcTimer.Services.Filtering.Activities;
 
 namespace AcTimer.Controllers
 {
@@ -14,13 +17,28 @@ namespace AcTimer.Controllers
     public class ActivitiesController : Controller
     {
         private ActivityRepository _activityRepository = new ActivityRepository();
+        private IFilter<Activity> _activitiesFilter = new ActivitiesFilter();
 
 
         // GET: Activities
-        public ActionResult Index()
+        public ActionResult Index(int? categoryId, DateTime? date, string sortBy, string searchString)
         {
-            var activities = _activityRepository.GetAllForeachUser();
+            switch (sortBy)
+            {
+                case "cateogry":
+                    break;
+                case "date":
+                    break;
+                case "hour":
+                    break;
+                default:
+                    break;
+            }
+            IEnumerable<Activity> activities = _activityRepository.GetAllForeachUser();
+
+            activities = _activitiesFilter.Filter(activities, new SpecificationByDate(date));
             return View(activities);
+           
         }
 
         public ActionResult Details(int? id)
@@ -69,8 +87,8 @@ namespace AcTimer.Controllers
             return RedirectToAction("Index", "Activities");
         }
 
-        [Authorize(Roles =("Admin,Moderator"))]
-        public ActionResult Dashboard()
+        [Authorize(Roles = ("Admin,Moderator"))]
+        public ActionResult Dashboard(int? userId, int? categoryId, DateTime? date, TimeSpan? timeSpent, int? user)
         {
             var activities = _activityRepository.GetAll();
 

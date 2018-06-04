@@ -14,7 +14,7 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col"></th>
-                        <th scope="col">Category</th>
+                        <th scope="col">@Html.ActionLink("Category","Index",routeValues : new { @sortOrder = ViewBag.Category})</th>
                         <th scope="col">Time Spent (h)</th>
                         <th scope="col">Description</th>
                         <th scope="col">Date</th>
