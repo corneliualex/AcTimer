@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AcTimer.Models.CustomValidations;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,7 @@ namespace AcTimer.Models
         public string Description { get; set; }
 
         [Required]
+        [DateInputRestriction]
         public DateTime Date { get; set; }
 
         [Required]

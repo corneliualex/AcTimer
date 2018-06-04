@@ -1,4 +1,5 @@
 ﻿using AcTimer.Models;
+using AcTimer.Models.CustomValidations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -20,6 +21,7 @@ namespace AcTimer.ViewModels
         public string Description { get; set; }
 
         [Required]
+        [DateInputRestriction]
         public DateTime? Date { get; set; }
 
         [Required]

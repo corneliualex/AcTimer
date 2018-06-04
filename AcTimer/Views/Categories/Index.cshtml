@@ -20,14 +20,14 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@Html.ActionLink("View","Details", routeValues: new { @id = item.Id })</td>
+                            <td>@Html.ActionLink("View", "Details", routeValues: new { @id = item.Id })</td>
                             <td><strong>@item.Name</strong></td>
                             <td>@Html.DisplayFor(c => item.DateAdded)</td>
                             <td>@item.ApplicationUser.UserName</td>
                         </tr>
                     }
                 </tbody>
-            </table> 
+            </table>
         </div>
     </div>
 </div>
