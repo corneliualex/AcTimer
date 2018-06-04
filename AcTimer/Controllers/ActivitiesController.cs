@@ -10,6 +10,7 @@ using AcTimer.Services.EntityRepository;
 
 namespace AcTimer.Controllers
 {
+    [Authorize]
     public class ActivitiesController : Controller
     {
         private ActivityRepository _activityRepository = new ActivityRepository();
@@ -18,7 +19,7 @@ namespace AcTimer.Controllers
         // GET: Activities
         public ActionResult Index()
         {
-            var activities = _activityRepository.GetAll();
+            var activities = _activityRepository.GetAllForeachUser();
             return View(activities);
         }
 
@@ -32,27 +33,24 @@ namespace AcTimer.Controllers
 
         public ActionResult Edit(int? id)
         {
-            //var activity = _activityRepository.GetById(id);
-            //if (activity == null) return HttpNotFound();
-
             var viewModel = _activityRepository.ActivityFormVM(id);
-            
+            if (viewModel == null) return HttpNotFound();
             return View("ActivityForm", viewModel);
         }
 
         public ActionResult Delete(int? id)
         {
             var activityIsDeleted = _activityRepository.IsDeleted(id);
-            if (activityIsDeleted ==  false) return HttpNotFound();
-          
-            return RedirectToAction("Index","Activities");
+            if (activityIsDeleted == false) return HttpNotFound();
+
+            return RedirectToAction("Index", "Activities");
         }
 
         public ActionResult New()
         {
             var viewModel = _activityRepository.ActivityFormVM();
-       
-            return View("ActivityForm",viewModel);
+
+            return View("ActivityForm", viewModel);
         }
 
         [HttpPost]
@@ -63,13 +61,20 @@ namespace AcTimer.Controllers
             {
                 var viewModel = _activityRepository.ActivityFormVM(activity);
 
-                return View("ActivityForm",viewModel);
+                return View("ActivityForm", viewModel);
             }
 
-            _activityRepository.NewOrUpdate(activity);
-           
+            if (_activityRepository.IsNewOrUpdate(activity) == false) return HttpNotFound();
+
             return RedirectToAction("Index", "Activities");
         }
 
+        [Authorize(Roles =("Admin,Moderator"))]
+        public ActionResult Dashboard()
+        {
+            var activities = _activityRepository.GetAll();
+
+            return View(activities);
+        }
     }
 }

@@ -207,6 +207,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Activity.cs" />
     <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\CustomValidations\DateInputRestriction.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -372,6 +373,7 @@
     <Content Include="Views\Activities\Details.cshtml" />
     <Content Include="Views\Activities\ActivityForm.cshtml" />
     <Content Include="Views\Categories\Dashboard.cshtml" />
+    <Content Include="Views\Activities\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

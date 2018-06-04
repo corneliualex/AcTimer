@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using AcTimer.Models.CustomValidations;
+using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,6 +17,7 @@ namespace AcTimer.Models
         public string Description { get; set; }
 
         [Required]
+        [DateInputRestriction]
         public DateTime Date { get; set; }
 
         [Required]
@@ -24,16 +26,11 @@ namespace AcTimer.Models
 
         //fk + nav prop => one to many. many activities have a category
         public int CategoryId { get; set; }
-        public string ApplicationUserId { get; private set; }
+        public string ApplicationUserId { get; set; }
 
         //fk + nav prop => one to many. many activities are created by an user
         public Category Category { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
-
-        public Activity()
-        {
-            ApplicationUserId = HttpContext.Current.User.Identity.GetUserId();
-        }
     }
 }

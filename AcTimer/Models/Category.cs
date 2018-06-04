@@ -20,7 +20,7 @@ namespace AcTimer.Models
         public DateTime DateAdded { get; private set; }
 
         //fk + nav prop => one to many. many categories are created by an user
-        public string ApplicationUserId { get; private set; }
+        public string ApplicationUserId { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
         public ICollection<Activity> Activities { get; set; }
@@ -28,7 +28,6 @@ namespace AcTimer.Models
         public Category()
         {
             DateAdded = DateTime.Now;
-            ApplicationUserId = HttpContext.Current.User.Identity.GetUserId();
         }
 
         /******************** Not mapped properties *****************************/

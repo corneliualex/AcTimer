@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Data.Entity;
+using Microsoft.AspNet.Identity;
 
 namespace AcTimer.Services.EntityRepository
 {
@@ -11,6 +12,10 @@ namespace AcTimer.Services.EntityRepository
     {
         private ApplicationDbContext _context = new ApplicationDbContext();
 
+        public CategoryRepository()
+        {
+
+        }
         //INCLUDE ALL NAV PROPERTIES FROM CATEGORY MODEL TO AVOID NULL REFERENCE
         public Category GetById(int? id)
         {
@@ -35,15 +40,22 @@ namespace AcTimer.Services.EntityRepository
             return true;
         }
         
-        public void NewOrUpdate(Category category)
+        public bool IsNewOrUpdate(Category category)
         {
-            if (category.Id == 0) { _context.Categories.Add(category); }
+            if (category.Id == 0)
+            {
+                category.ApplicationUserId = HttpContext.Current.User.Identity.GetUserId();
+                _context.Categories.Add(category);
+            }
             else
             {
                 var categoryInDb = GetById(category.Id);
+                if (categoryInDb == null) return false;
+
                 categoryInDb.Name = category.Name;
             }
             _context.SaveChanges();
+            return true;
         }
     }
 }

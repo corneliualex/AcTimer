@@ -11,6 +11,6 @@ namespace AcTimer.Services.EntityRepository
         T GetById(int? id);
         IEnumerable<T> GetAll();
         bool IsDeleted(int? id);
-        void NewOrUpdate(T T);
+        bool IsNewOrUpdate(T T);
     }
 }
