@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using AcTimer.ViewModels;
 using AcTimer.Services.EntityRepository;
+using AcTimer.Services.Filtering;
+using AcTimer.Services.Filtering.Activities.Specification;
+using AcTimer.Services.Filtering.Activities;
 
 namespace AcTimer.Controllers
 {
@@ -14,13 +17,23 @@ namespace AcTimer.Controllers
     public class ActivitiesController : Controller
     {
         private ActivityRepository _activityRepository = new ActivityRepository();
-
+        private CategoryRepository _categoriesRepository = new CategoryRepository();
+        private IFilter<Activity> _activitiesFilter = new ActivitiesFilter();
+        private ApplicationDbContext usersContext = new ApplicationDbContext();
 
         // GET: Activities
-        public ActionResult Index()
+        public ActionResult Index(int? categoryId, DateTime? date, string searchString)
         {
-            var activities = _activityRepository.GetAllForeachUser();
-            return View(activities);
+            var viewModel = new ActivityFiltersViewModel
+            {
+                Activities = _activityRepository.GetAllForeachUser(),
+                Categories = _categoriesRepository.GetAll(),
+            };
+
+            viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date);
+
+            return View(viewModel);
+
         }
 
         public ActionResult Details(int? id)
@@ -69,12 +82,73 @@ namespace AcTimer.Controllers
             return RedirectToAction("Index", "Activities");
         }
 
-        [Authorize(Roles =("Admin,Moderator"))]
-        public ActionResult Dashboard()
+        [Authorize(Roles = ("Admin,Moderator"))]
+        public ActionResult Dashboard(int? categoryId, DateTime? date, string userId)
         {
-            var activities = _activityRepository.GetAll();
+            var viewModel = new ActivityFiltersViewModel
+            {
+                Activities = _activityRepository.GetAll(),
+                Categories = _categoriesRepository.GetAll(),
+                ApplicationUsers = usersContext.Users.ToList()
+            };
 
-            return View(activities);
+            if (String.IsNullOrEmpty(userId))
+            {
+                viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date);
+            }
+            else
+            {
+                viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date, userId);
+            }
+
+
+            return View(viewModel);
         }
+
+        private IEnumerable<Activity> GetActivitiesFiltered(IEnumerable<Activity> activities, int? categoryId, DateTime? date)
+        {
+
+            if (categoryId != null && date == null)
+            {
+                activities = _activitiesFilter.Filter(activities, new SpecificationByCategoryId(categoryId));
+            }
+            else if (date != null && categoryId == null)
+            {
+                activities = _activitiesFilter.Filter(activities, new SpecificationByDate(date));
+            }
+            else if (categoryId != null && date != null)
+            {
+                activities = _activitiesFilter.Filter(activities, new DoubleSpecification<Activity>(new SpecificationByCategoryId(categoryId), new SpecificationByDate(date)));
+            }
+
+            return activities;
+        }
+
+        private IEnumerable<Activity> GetActivitiesFiltered(IEnumerable<Activity> activities, int? categoryId, DateTime? date, string userId)
+        {
+            if (userId != null && categoryId == null && date == null)
+            {
+                //filter by user
+                activities = _activitiesFilter.Filter(activities, new SpecificationByUserId(userId));
+            }
+            else if (userId != null && categoryId != null && date == null)
+            {
+                //filter by user and category
+                activities = _activitiesFilter.Filter(activities, new DoubleSpecification<Activity>(new SpecificationByUserId(userId), new SpecificationByCategoryId(categoryId)));
+            }
+            else if (userId != null && date != null && categoryId == null)
+            {
+                //filter user and date 
+                activities = _activitiesFilter.Filter(activities, new DoubleSpecification<Activity>(new SpecificationByUserId(userId), new SpecificationByDate(date)));
+            }
+            else if (categoryId != null && date != null && categoryId != null)
+            {
+                // Triple Specification
+                activities = _activitiesFilter.Filter(activities, new TripleSpecification<Activity>(new SpecificationByCategoryId(categoryId), new SpecificationByDate(date), new SpecificationByUserId(userId)));
+            }
+
+            return activities;
+        }
+
     }
 }

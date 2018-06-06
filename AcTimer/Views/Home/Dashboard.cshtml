@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+
+<div class="container">
+    <hr />   
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-primary" href="#">Manage Users</a>
+        </div>
+        
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-primary" href="@Url.Action("Dashboard","Activities")">Manage Activities</a>
+        </div>
+        <div class="col-lg-6">
+            Here will be a google chart with some simple stats
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-lg-6">
+            <a class="btn btn-primary" href="@Url.Action("Dashboard","Categories")">Manage Categories</a>
+        </div>
+        <div class="col-lg-6">
+            Here will be a google chart with some simple stats
+        </div>
+    </div>
+
+
+</div>

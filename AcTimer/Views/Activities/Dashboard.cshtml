@@ -1,10 +1,10 @@
-﻿@model IEnumerable<AcTimer.Models.Activity>
+﻿@model AcTimer.ViewModels.ActivityFiltersViewModel
 @{
     ViewBag.Title = "Dashboard";
 }
 
 <h2>Dashboard</h2>
-
+@Html.Partial("_DashboardFilter")
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
@@ -12,7 +12,7 @@
                 <thead>
                     <tr>
                         <th scope="col"></th>
-                        <th scope="col"></th>
+                        <th scope="col">User</th>
                         <th scope="col">Category</th>
                         <th scope="col">Time Spent (h)</th>
                         <th scope="col">Description</th>
@@ -22,14 +22,21 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Activities)
                     {
                         <tr>
-                            <td>@item.ApplicationUser.UserName</td>
                             <td>@Html.ActionLink("View", "Details", routeValues: new { @id = item.Id })</td>
+                            <td>@item.ApplicationUser.UserName</td>
                             <td>@item.Category.Name</td>
                             <td>@item.TimeSpent.ToString(@"hh\:mm")</td>
-                            <td>@item.Description</td>
+                            @if (item.Description.Count() > 20)
+                            {
+                                <td>@item.Description.Substring(0, 20)</td>
+                            }
+                            else
+                            {
+                                <td>@item.Description</td>
+                            }
                             <td>@item.Date.ToString("dd/MM/yyyy")</td>
                             <td>@Html.ActionLink("Edit", "Edit", routeValues: new { @id = item.Id })</td>
                             <td>@Html.ActionLink("Delete", "Delete", routeValues: new { @id = item.Id }, htmlAttributes: new { @onclick = "return confirm('Are sure wants to delete?');" })</td>
