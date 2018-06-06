@@ -8,16 +8,15 @@ namespace AcTimer.Services.Filtering.Activities.Specification
 {
     public class SpecificationByCategoryId : ISpecification<Activity>
     {
-        private int? _categoryId;
+        public int? categoryId;
         public SpecificationByCategoryId(int? categoryId)
         {
-            _categoryId = categoryId;
+            this.categoryId = categoryId;
         }
 
         public bool IsSatisfied(Activity activity)
         {
-            if (_categoryId == activity.CategoryId) return true;
-
+            if (categoryId == activity.CategoryId) return true;
             return false;
         }
     }

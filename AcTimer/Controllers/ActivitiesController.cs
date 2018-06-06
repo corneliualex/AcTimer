@@ -17,28 +17,22 @@ namespace AcTimer.Controllers
     public class ActivitiesController : Controller
     {
         private ActivityRepository _activityRepository = new ActivityRepository();
+        private CategoryRepository _categoriesRepository = new CategoryRepository();
         private IFilter<Activity> _activitiesFilter = new ActivitiesFilter();
 
-
         // GET: Activities
-        public ActionResult Index(int? categoryId, DateTime? date, string sortBy, string searchString)
+        public ActionResult Index(int? categoryId, DateTime? date, string searchString)
         {
-            switch (sortBy)
+            var viewModel = new ActivityFiltersViewModel
             {
-                case "cateogry":
-                    break;
-                case "date":
-                    break;
-                case "hour":
-                    break;
-                default:
-                    break;
-            }
-            IEnumerable<Activity> activities = _activityRepository.GetAllForeachUser();
+                Activities = _activityRepository.GetAllForeachUser(),
+                Categories = _categoriesRepository.GetAll(),
+            };
 
-            activities = _activitiesFilter.Filter(activities, new SpecificationByDate(date));
-            return View(activities);
-           
+            viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date);
+
+            return View(viewModel);
+
         }
 
         public ActionResult Details(int? id)
@@ -88,11 +82,68 @@ namespace AcTimer.Controllers
         }
 
         [Authorize(Roles = ("Admin,Moderator"))]
-        public ActionResult Dashboard(int? userId, int? categoryId, DateTime? date, TimeSpan? timeSpent, int? user)
+        public ActionResult Dashboard(int? categoryId, DateTime? date, string userId)
         {
-            var activities = _activityRepository.GetAll();
+            var viewModel = new ActivityFiltersViewModel
+            {
+                Activities = _activityRepository.GetAll(),
+                Categories = _categoriesRepository.GetAll(),
+            };
 
-            return View(activities);
+            if (userId == null)
+            {
+                viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date);
+            }
+            else
+            {
+                viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date, userId);
+            }
+
+
+            return View(viewModel);
         }
+
+        private IEnumerable<Activity> GetActivitiesFiltered(IEnumerable<Activity> activities, int? categoryId, DateTime? date)
+        {
+
+            if (categoryId != null && date == null)
+            {
+                activities = _activitiesFilter.Filter(activities, new SpecificationByCategoryId(categoryId));
+            }
+            else if (date != null && categoryId == null)
+            {
+                activities = _activitiesFilter.Filter(activities, new SpecificationByDate(date));
+            }
+            else if (categoryId != null && date != null)
+            {
+                activities = _activitiesFilter.Filter(activities, new DoubleSpecification<Activity>(new SpecificationByCategoryId(categoryId), new SpecificationByDate(date)));
+            }
+
+            return activities;
+        }
+
+        private IEnumerable<Activity> GetActivitiesFiltered(IEnumerable<Activity> activities, int? categoryId, DateTime? date, string userId)
+        {
+            if (userId != null && categoryId == null && date == null)
+            {
+                //filter foruserId
+            }
+            else if (userId != null && categoryId != null && date == null)
+            {
+                //filter user and date
+            }
+            else if (userId != null && date != null && categoryId == null)
+            {
+                //filter user and category 
+            }
+            else if (categoryId != null && date != null && categoryId != null)
+            {
+                // Triple Specification
+                
+            }
+
+            return activities;
+        }
+
     }
 }

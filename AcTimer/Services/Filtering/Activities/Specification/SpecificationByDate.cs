@@ -8,17 +8,16 @@ namespace AcTimer.Services.Filtering.Activities.Specification
 {
     public class SpecificationByDate : ISpecification<Activity>
     {
-        private DateTime? _date;
+        public DateTime? date;
 
         public SpecificationByDate(DateTime? date)
         {
-            _date = date;
+            this.date = date;
         }
 
         public bool IsSatisfied(Activity activity)
         {
-            if (_date.HasValue && _date.Value.ToString("dd/mm/yyyy").Equals(activity.Date.ToString("dd/mm/yyyy"))) return true;
-
+            if (date.HasValue && date.Value.ToString("dd/mm/yyyy").Equals(activity.Date.ToString("dd/mm/yyyy"))) return true;
             return false;
         }
     }
