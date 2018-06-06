@@ -215,11 +215,13 @@
     <Compile Include="Services\EntityRepository\CategoryRepository.cs" />
     <Compile Include="Services\EntityRepository\IEntityRepository.cs" />
     <Compile Include="Services\Filtering\Activities\ActivitiesFilter.cs" />
+    <Compile Include="Services\Filtering\Activities\Specification\SpecificationByUserId.cs" />
     <Compile Include="Services\Filtering\DoubleSpecification.cs" />
     <Compile Include="Services\Filtering\Activities\Specification\SpecificationByCategoryId.cs" />
     <Compile Include="Services\Filtering\Activities\Specification\SpecificationByDate.cs" />
     <Compile Include="Services\Filtering\IFilter.cs" />
     <Compile Include="Services\Filtering\ISpecification.cs" />
+    <Compile Include="Services\Filtering\TripleSpecification.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivityFiltersViewModel.cs" />
     <Compile Include="ViewModels\ActivityFormViewModel.cs" />

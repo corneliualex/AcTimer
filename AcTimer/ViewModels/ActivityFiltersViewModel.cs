@@ -11,7 +11,7 @@ namespace AcTimer.ViewModels
     {
         public IEnumerable<Activity> Activities { get; set; }
         public IEnumerable<Category> Categories { get; set; }
+        public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
 
-        public string SortBy { get; set; }
     }
 }

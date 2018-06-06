@@ -19,6 +19,16 @@
                 </select>
             </div>
 
+            <div class="col-lg-2">
+                <select class="form-control" id="userId" name="userId">
+                    <option value="">Users</option>
+                    @foreach (var item in Model.ApplicationUsers)
+                {
+                        <option value="@item.Id">@item.UserName</option>
+                    }
+                </select>
+            </div>
+
             <div class="col-lg-3">
                 <input class="form-control" id="Date" type="text" name="Date" placeholder="Date" />
             </div>
