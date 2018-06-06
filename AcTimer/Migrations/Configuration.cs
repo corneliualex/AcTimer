@@ -35,12 +35,20 @@ namespace AcTimer.Migrations
                 var manager = new UserManager<ApplicationUser>(store);
                 var user = new ApplicationUser { Email = userNameAndEmail, UserName = userNameAndEmail };
 
-                manager.Create(user,"Admin1!");
+                manager.Create(user, "Admin1!");
                 manager.AddToRole(user.Id, "Admin");
             }
 
+            context.Categories.AddOrUpdate(
+                c => c.Name,
+                new Category() { Name = "Fotball", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" },
+                new Category() { Name = "Relaxing", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" },
+                new Category() { Name = "Gaming", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" },
+                new Category() { Name = "Working", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" }
+                );
 
         }
+
 
         //  This method will be called after migrating to the latest version.
 
