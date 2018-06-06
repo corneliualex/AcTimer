@@ -385,6 +385,7 @@
     <Content Include="Views\Activities\Dashboard.cshtml" />
     <Content Include="Views\Activities\_ActivitiesFilter.cshtml" />
     <Content Include="Views\Activities\_DashboardFilter.cshtml" />
+    <Content Include="Views\Home\Dashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

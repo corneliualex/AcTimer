@@ -8,6 +8,11 @@ namespace AcTimer.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult Dashboard()
+        {
+            return View();
+        }
+
         public ActionResult Index()
         {
             return View();
