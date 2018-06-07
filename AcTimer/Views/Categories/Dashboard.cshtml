@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AcTimer.Models.Category>
+﻿@model AcTimer.ViewModels.CategoryFilterViewModel
 
 @{
     ViewBag.Title = "Dashboard";
@@ -6,6 +6,8 @@
 
 <h2>Dashboard</h2>
 
+@Html.Partial("_DashboardFilter")
+<hr />
 <div class="container">
     <div class="row">
         <div class="col-lg-12"><a type="button" class="btn btn-primary btn-lg btn-block" href="@Url.Action("New")">Add a new category</a></div>
@@ -22,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Categories)
                     {
                         <tr>
                             <td>@Html.ActionLink("View", "Details", routeValues: new { @id = item.Id })</td>
