@@ -105,6 +105,11 @@ namespace AcTimer.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Stats()
+        {
+            return View();
+        }
+        #region Helpers
         private IEnumerable<Activity> GetActivitiesFiltered(IEnumerable<Activity> activities, int? categoryId, DateTime? date)
         {
 
@@ -149,6 +154,6 @@ namespace AcTimer.Controllers
 
             return activities;
         }
-
+        #endregion
     }
 }
