@@ -37,15 +37,19 @@ namespace AcTimer.Migrations
 
                 manager.Create(user, "Admin1!");
                 manager.AddToRole(user.Id, "Admin");
+
+                //seed db when admin is already created
+                context.Categories.AddOrUpdate(
+                c => c.Name,
+                new Category() { Name = "Fotball", ApplicationUserId = user.Id },
+                new Category() { Name = "Relaxing", ApplicationUserId = user.Id },
+                new Category() { Name = "Gaming", ApplicationUserId = user.Id },
+                new Category() { Name = "Working", ApplicationUserId = user.Id }
+                );
             }
 
-            context.Categories.AddOrUpdate(
-                c => c.Name,
-                new Category() { Name = "Fotball", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" },
-                new Category() { Name = "Relaxing", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" },
-                new Category() { Name = "Gaming", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" },
-                new Category() { Name = "Working", ApplicationUserId = "3f4fb282-e238-442f-b31b-4a9c68f742ee" }
-                );
+
+
 
         }
 
