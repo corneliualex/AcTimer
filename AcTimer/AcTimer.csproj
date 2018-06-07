@@ -216,6 +216,9 @@
     <Compile Include="Services\EntityRepository\IEntityRepository.cs" />
     <Compile Include="Services\Filtering\Activities\ActivitiesFilter.cs" />
     <Compile Include="Services\Filtering\Activities\Specification\SpecificationByUserId.cs" />
+    <Compile Include="Services\Filtering\Categories\CategoriesFilter.cs" />
+    <Compile Include="Services\Filtering\Categories\Specification\SpecificationByDate.cs" />
+    <Compile Include="Services\Filtering\Categories\Specification\SpecificationByUserId.cs" />
     <Compile Include="Services\Filtering\DoubleSpecification.cs" />
     <Compile Include="Services\Filtering\Activities\Specification\SpecificationByCategoryId.cs" />
     <Compile Include="Services\Filtering\Activities\Specification\SpecificationByDate.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\ActivityFiltersViewModel.cs" />
     <Compile Include="ViewModels\ActivityFormViewModel.cs" />
+    <Compile Include="ViewModels\CategoryFilterViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-datetimepicker.css" />
@@ -386,6 +390,8 @@
     <Content Include="Views\Activities\_ActivitiesFilter.cshtml" />
     <Content Include="Views\Activities\_DashboardFilter.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
+    <Content Include="Views\Categories\_CategoryFilter.cshtml" />
+    <Content Include="Views\Categories\_DashboardFilter.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
