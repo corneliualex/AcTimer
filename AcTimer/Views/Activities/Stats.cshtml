@@ -9,12 +9,13 @@
     <div class="row text-center">
         <h2>Stats</h2>
     </div>
-    
+
     <hr />
     <div class="row">
         <div class="col-lg-12 text-center">
             Pie chart, Daily activities
             https://developers.google.com/chart/interactive/docs/gallery/piechart
+
         </div>
     </div>
     <hr />
@@ -24,22 +25,84 @@
                 <thead>
                     <tr>
                         <th scope="col">Category</th>
-                        <th scope="col">Average Time</th>
-                        <th scope="col">Last Update</th>
+                        <th scope="col">Avg. Time</th>
                         <th scope="col">Stats</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Working</td>
-                        <td>6 hours</td>
-                        <td>Last Added Date</td>
-                        <td>Line chart https://developers.google.com/chart/interactive/docs/gallery/linechart </td>
-                    </tr>
+                <tbody id="body">
                 </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart', 'line'] });
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+        let url = 'http://localhost:58414'
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                // Typical action to be performed when the document is ready:
+                var data = xhttp.responseText;
+                drawFirst(data);
+            }
+        };
+        xhttp.open("GET", url + '/api/stats', true);
+        xhttp.send();
+    }
+
+    
+    function drawFirst(data) {
+        var arr = JSON.parse(data);
+        for (let i = 0; i < arr.length; i++) {
+            var body = document.getElementById("body");
+            var row = body.insertRow(i);
+            var parsedArr = arr[i];
+            var graphData = parsedArr.activitiesDto;
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            cell1.innerHTML = parsedArr.catgoryName;
+            cell2.innerHTML = parsedArr.averageTime;
+            drawGraph(graphData, cell3);
+        }
+    }
+    //drawFirst();
+    function drawGraph(data, cell3) {
+        console.log(data);
+        var table = new google.visualization.DataTable();
+        table.addColumn('string', 'Date');
+        table.addColumn('number', 'Hours Spent');
+
+        for (var i = 0; i < data.length; i++) {
+            table.addRow([data[i].date.split("T00")[0], data[i].totalSpent]);
+        }
+        console.log(table);
+
+        var options = {
+            chartArea: { width: '75%' },
+            hAxis: {
+                title: 'Date',
+                minValue: 0
+            },
+            vAxis: {
+                title: 'Hours Spent'
+            },
+            seriesType: 'line',
+            series: { 0: { type: 'line', lineWidth: 3 } },
+            'width': 1000,
+            'height': 200
+        };
+
+        var chart = new google.visualization.LineChart(cell3);
+
+        chart.draw(table, options);
+    }
+</script>
 
 
