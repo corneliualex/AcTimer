@@ -18,13 +18,15 @@ namespace AcTimer.Migrations
         protected override void Seed(AcTimer.Models.ApplicationDbContext context)
         {
             //seeding app with a role
-            if (!context.Roles.Any(r => r.Name == "Admin"))
+            if (!context.Roles.Any(r => r.Name == "Admin" && r.Name == "Moderator"))
             {
                 var store = new RoleStore<IdentityRole>(context);
                 var manager = new RoleManager<IdentityRole>(store);
                 var role = new IdentityRole { Name = "Admin" };
+                var role1 = new IdentityRole { Name = "Moderator" };
 
                 manager.Create(role);
+                manager.Create(role1);
             }
 
             //seeding app with a user and add a role to it

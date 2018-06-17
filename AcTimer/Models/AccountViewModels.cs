@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AcTimer.Models
@@ -79,6 +80,14 @@ namespace AcTimer.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    public class RegisterAccountViewModel : RegisterViewModel
+    {
+        [Required]
+        [Display(Name = "Roles")]
+        public string IdentityRoleId { get; set; }
+        public IEnumerable<IdentityRole> Roles { get; set; }
     }
 
     public class ResetPasswordViewModel
