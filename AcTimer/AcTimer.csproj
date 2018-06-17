@@ -193,6 +193,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="DTOs\ActivityDto.cs" />
     <Compile Include="DTOs\CategoryDto.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -415,6 +416,9 @@
     <Content Include="Views\Categories\_CategoryFilter.cshtml" />
     <Content Include="Views\Categories\_DashboardFilter.cshtml" />
     <Content Include="Views\Activities\Stats.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\UsersForm.cshtml" />
+    <Content Include="Views\Account\RegisterUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

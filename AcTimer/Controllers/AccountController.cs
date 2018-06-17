@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using AcTimer.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AcTimer.Controllers
 {
@@ -17,7 +18,7 @@ namespace AcTimer.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext _context = new ApplicationDbContext();
         public AccountController()
         {
         }
@@ -171,6 +172,39 @@ namespace AcTimer.Controllers
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+        [Authorize(Roles ="Admin")]
+        public ActionResult RegisterUser()
+        {
+            var viewModel = new RegisterAccountViewModel
+            { Roles = _context.Roles.ToList() };
+            return View("RegisterUser",viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> RegisterUser(RegisterAccountViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //create user first
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var result = await UserManager.CreateAsync(user, model.Password);
+                //if user is created
+                if (result.Succeeded)
+                {
+                    //add role to user
+                    var store = new RoleStore<IdentityRole>(_context);
+                    var manager = new RoleManager<IdentityRole>(store);
+                    var role = manager.FindById(model.IdentityRoleId);
+                    UserManager.AddToRole(user.Id, role.Name);
+                    return RedirectToAction("Index", "Users");
+                }
+                AddErrors(result);
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
+        } 
 
         //
         // GET: /Account/ConfirmEmail
@@ -184,6 +218,8 @@ namespace AcTimer.Controllers
             var result = await UserManager.ConfirmEmailAsync(userId, code);
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
+        
+        
 
         //
         // GET: /Account/ForgotPassword
