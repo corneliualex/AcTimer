@@ -13,5 +13,8 @@ namespace AcTimer.ViewModels
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<ApplicationUser> ApplicationUsers { get; set; }
 
+      
+        public int? CategoryId { get; set; }
+
     }
 }

@@ -11,16 +11,21 @@ namespace AcTimer.Models.CustomValidations
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             var activity = (Activity)validationContext.ObjectInstance;
-            if (activity.Date == null)
-                return new ValidationResult("Date is required");
-            else
-            if ((DateTime.Now - activity.Date).Days > 3)
-                return new ValidationResult("Activity is older than 3 days");
-            else
-            if (DateTime.Now < activity.Date)
-                return new ValidationResult("Really ?");
-            else
-                return ValidationResult.Success;
+            if(activity.Id == 0)
+            {
+                if (activity.Date == null)
+                    return new ValidationResult("Date is required");
+                else
+           if ((DateTime.Now - activity.Date).Days > 3)
+                    return new ValidationResult("Activity is older than 3 days");
+                else
+           if (DateTime.Now < activity.Date)
+                    return new ValidationResult("Really ?");
+                else
+                    return ValidationResult.Success;
+            }
+            return ValidationResult.Success;
         }
+           
     }
 }
