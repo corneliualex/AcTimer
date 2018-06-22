@@ -22,12 +22,13 @@ namespace AcTimer.Controllers
         private ApplicationDbContext usersContext = new ApplicationDbContext();
 
         // GET: Activities
-        public ActionResult Index(int? categoryId, DateTime? date, string searchString)
+        public ActionResult Index(int? categoryId, DateTime? date)
         {
             var viewModel = new ActivityFiltersViewModel
             {
                 Activities = _activityRepository.GetAllForeachUser(),
                 Categories = _categoriesRepository.GetAll(),
+                CategoryId = categoryId
             };
 
             viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date);

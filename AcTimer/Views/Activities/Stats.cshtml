@@ -4,21 +4,17 @@
 }
 
 
-
 <div class="container">
-    <div class="row text-center">
-        <h2>Stats</h2>
+    <div class="row ">
+        <h2  style="position:fixed">Stats</h2>
     </div>
 
-    <hr />
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <div id="piechart" style="width: 700px; height: 500px;"></div>
+    <div class="row" style="margin-left:-300px;  display:inline-flex">
+        <div class="col-md-3">
+            <div id="piechart" style="width: 450px; height: 500px; position:fixed"></div>
         </div>
-    </div>
-    <hr />
-    <div class="row">
-        <div class="col-lg-12">
+        <div class="col-md-2"></div>
+        <div class="col-md-7">
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -50,7 +46,7 @@
                 drawFirst(data);
             }
         };
-        xhttp.open("GET", url + '/api/stats', true);
+        xhttp.open("GET", url + '/api/linestats', true);
         xhttp.send();
     }
 
@@ -83,7 +79,7 @@
         console.log(table);
 
         var options = {
-            chartArea: { width: '75%' },
+            chartArea: { width: '70%' },
             hAxis: {
                 title: 'Date',
                 minValue: 0

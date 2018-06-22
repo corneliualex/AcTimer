@@ -13,8 +13,16 @@
                 <select class="form-control" id="categoryId" name="categoryId">
                     <option value="">Categories</option>
                     @foreach (var item in Model.Categories)
-                {
-                        <option value="@item.Id">@item.Name</option>
+                    {
+                        if (item.Id == Model.CategoryId)
+                        {
+
+                            <option value="@item.Id" selected>@item.Name</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.Name</option>
+                        }
                     }
                 </select>
             </div>
