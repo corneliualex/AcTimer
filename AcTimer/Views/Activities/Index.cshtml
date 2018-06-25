@@ -2,11 +2,18 @@
 @{
     ViewBag.Title = "Index";
 }
-<h2>Activities</h2>
-@Html.Partial("_ActivitiesFilter")
+
 
 
 <div class="container">
+    <div class="row">
+        <div class="col-md-12"><h2 style="text-align:center">Activities</h2></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("_ActivitiesFilter")
+        </div>
+    </div>
     <div class="row">
         <div class="col-lg-6"><a type="button" class="btn btn-primary btn-lg btn-block" href="@Url.Action("New")">Add a new activity</a></div>
         <div class="col-lg-6"><a type="button" class="btn btn-primary btn-lg btn-block" href="@Url.Action("Stats")">See Stats !</a></div>
@@ -17,7 +24,7 @@
                 <thead>
                     <tr>
                         <th scope="col"></th>
-                        
+
                         <th scope="col">Category</th>
                         <th scope="col">Time Spent (h)</th>
                         <th scope="col">Description</th>

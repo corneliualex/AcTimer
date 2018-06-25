@@ -4,29 +4,47 @@
 }
 
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 style="text-align:center">STATS</h1>
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="col-md-4">
+                <div id="piechart" style="position:fixed"></div>
+            </div>
+            <div class="col-md-8">
+                <div class="col-md-7">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Category</th>
+                                <th scope="col">Avg. Time</th>
+                                <th scope="col">Stats</th>
+                            </tr>
+                        </thead>
+                        <tbody id="body"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="container">
     <div class="row ">
-        <h2  style="position:fixed">Stats</h2>
+   
     </div>
 
     <div class="row" style="margin-left:-300px;  display:inline-flex">
         <div class="col-md-3">
-            <div id="piechart" style="width: 450px; height: 500px; position:fixed"></div>
+           
         </div>
         <div class="col-md-2"></div>
-        <div class="col-md-7">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Category</th>
-                        <th scope="col">Avg. Time</th>
-                        <th scope="col">Stats</th>
-                    </tr>
-                </thead>
-                <tbody id="body">
-                </tbody>
-            </table>
-        </div>
+        
     </div>
 </div>
 
@@ -46,7 +64,7 @@
                 drawFirst(data);
             }
         };
-        xhttp.open("GET", url + '/api/linestats', true);
+        xhttp.open("GET", url + '/api/stats', true);
         xhttp.send();
     }
 
@@ -88,7 +106,10 @@
                 title: 'Hours Spent'
             },
             seriesType: 'line',
+            pointSize : 5,
+            lineWidth: 5,
             series: { 0: { type: 'line', lineWidth: 3 } },
+            backgroundColor: { fill: 'transparent' },
             'width': 1000,
             'height': 200
         };
@@ -113,7 +134,11 @@
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+            title: 'My Daily Activities',
+            chartArea: { width: 600, height: 300 },
+            backgroundColor: { fill:'transparent' },
+            width: 500,
+            height:400
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
