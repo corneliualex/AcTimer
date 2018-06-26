@@ -2,53 +2,39 @@
 @{
     ViewBag.Title = "Stats";
 }
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h1 style="text-align:center">STATS</h1>
+            <h2 style="text-align:center">STATS</h2>
         </div>
     </div>
     <hr />
-    <div class="row">
-        <div class="col-md-12">
-            <div class="col-md-4">
-                <div id="piechart" style="position:fixed"></div>
+    <div class="container-fluid" style="float:left; width:40%">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="piechart"></div>
             </div>
-            <div class="col-md-8">
-                <div class="col-md-7">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Category</th>
-                                <th scope="col">Avg. Time</th>
-                                <th scope="col">Stats</th>
-                            </tr>
-                        </thead>
-                        <tbody id="body"></tbody>
-                    </table>
-                </div>
-            </div>
+            
         </div>
-    </div>
-</div>
-
-<div class="container">
-    <div class="row ">
-   
-    </div>
-
-    <div class="row" style="margin-left:-300px;  display:inline-flex">
-        <div class="col-md-3">
-           
-        </div>
-        <div class="col-md-2"></div>
         
     </div>
+    <div class="container-fluid" style="float:left; width:60%">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Avg. Time</th>
+                            <th scope="col">Stats</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
-
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -68,7 +54,7 @@
         xhttp.send();
     }
 
-    
+
     function drawFirst(data) {
         var arr = JSON.parse(data);
         for (let i = 0; i < arr.length; i++) {
@@ -106,11 +92,11 @@
                 title: 'Hours Spent'
             },
             seriesType: 'line',
-            pointSize : 5,
+            pointSize: 5,
             lineWidth: 5,
             series: { 0: { type: 'line', lineWidth: 3 } },
             backgroundColor: { fill: 'transparent' },
-            'width': 1000,
+            'width': 850,
             'height': 200
         };
 
@@ -122,27 +108,27 @@
 
 
 <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+    function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
-          ['Relaxare',     52.60],
-          ['Plimbare',      47.39],
+          ['Relaxare', 52.60],
+          ['Plimbare', 47.39],
         ]);
 
         var options = {
             title: 'My Daily Activities',
             chartArea: { width: 600, height: 300 },
-            backgroundColor: { fill:'transparent' },
+            backgroundColor: { fill: 'transparent' },
             width: 500,
-            height:400
+            height: 400
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
-      }
+    }
 </script>
