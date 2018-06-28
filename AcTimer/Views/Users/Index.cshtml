@@ -1,14 +1,45 @@
-﻿@model IEnumerable<string>
+﻿@model IEnumerable<AcTimer.Controllers.UserRoles>
 
-    @{
-        ViewBag.Title = "Index";
-    }
+@{
+    ViewBag.Title = "Index";
+}
 
-    <h2>Index</h2>
+<h2>App Members</h2>
+<div class="container">
+    <a type="button" class="btn btn-primary btn-lg btn-block" href="@Url.Action("New")">Add a new user</a>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">UserName</th>
+                <th scope="col">Roles</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
 
-    <ul>
-        @foreach (var item in Model)
-        {
-            <li>@item</li>
-        }
-    </ul>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.User.UserName</td>
+                    <td>
+                        @foreach (var role in user.Roles)
+                {
+                            <b>@(role + " ")</b>
+                        }
+                    </td>
+
+                    <td>@Html.ActionLink("Delete", "Delete", routeValues: new { @id = user.User.Id }, htmlAttributes: new { @onclick = "return confirm('Are sure wants to delete?');" })</td>
+
+                </tr>
+            }
+
+
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+
