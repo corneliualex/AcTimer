@@ -1,37 +1,31 @@
 ﻿@model AcTimer.ViewModels.CategoryFilterViewModel
 
-@using (Html.BeginForm("Index", "Categories",FormMethod.Get))
+@using (Html.BeginForm("Index", "Categories", FormMethod.Get))
 {
-    <div class="form-inline">
-        <hr />
-        <div class="row">
-            <div class="col-lg-3">
-                <h4>Filter</h4>
-            </div>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <select class="form-control" id="userId" name="userId">
+                <option value="">Users</option>
+                @{
+                    var x = Model.ApplicationUsers.Single(u => u.UserName.Equals(HttpContext.Current.User.Identity.Name));
+                }
 
-            <div class="col-lg-3">
-                <select class="form-control" id="userId" name="userId">
-                    <option value="">Users</option>
-                    @foreach (var item in Model.ApplicationUsers)
-                {
-                        <option value="@item.Id">@item.UserName</option>
-                    }
-                </select>
-            </div>
+                <option value="@x.Id">@x.UserName</option>
 
-            <div class="col-lg-3">
-                <input class="form-control" id="DateAdded" type="text" name="date" placeholder="Date" />
-            </div>
+            </select>
+        </div>
+        <div class="col-md-4">
+            <input class="form-control" id="DateAdded" type="text" name="date" placeholder="Date" />
+        </div>
 
 
-            <div class="col-lg-3">
-                <input type="submit" class="btn btn-default form-control" value="Filter" />
-            </div>
-
+        <div class="col-md-4">
+            <input type="submit" class="btn btn-default form-control" value="Filter" />
         </div>
     </div>
-
-}
+                    }
+<hr />
 
 
 

@@ -2,35 +2,39 @@
 @{
     ViewBag.Title = "Stats";
 }
-
-
-<div class="container">
-    <div class="row ">
-        <h2  style="position:fixed">Stats</h2>
-    </div>
-
-    <div class="row" style="margin-left:-300px;  display:inline-flex">
-        <div class="col-md-3">
-            <div id="piechart" style="width: 450px; height: 500px; position:fixed"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <h2 style="text-align:center">STATS</h2>
         </div>
-        <div class="col-md-2"></div>
-        <div class="col-md-7">
-            <table class="table table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col">Category</th>
-                        <th scope="col">Avg. Time</th>
-                        <th scope="col">Stats</th>
-                    </tr>
-                </thead>
-                <tbody id="body">
-                </tbody>
-            </table>
+    </div>
+    <hr />
+    <div class="container-fluid" style="float:left; width:40%">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="piechart"></div>
+            </div>
+            
+        </div>
+        
+    </div>
+    <div class="container-fluid" style="float:left; width:60%">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Category</th>
+                            <th scope="col">Avg. Time</th>
+                            <th scope="col">Stats</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body"></tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
     google.charts.load('current', { packages: ['corechart', 'line'] });
@@ -46,11 +50,11 @@
                 drawFirst(data);
             }
         };
-        xhttp.open("GET", url + '/api/linestats', true);
+        xhttp.open("GET", url + '/api/stats', true);
         xhttp.send();
     }
 
-    
+
     function drawFirst(data) {
         var arr = JSON.parse(data);
         for (let i = 0; i < arr.length; i++) {
@@ -88,8 +92,11 @@
                 title: 'Hours Spent'
             },
             seriesType: 'line',
+            pointSize: 5,
+            lineWidth: 5,
             series: { 0: { type: 'line', lineWidth: 3 } },
-            'width': 1000,
+            backgroundColor: { fill: 'transparent' },
+            'width': 850,
             'height': 200
         };
 
@@ -101,23 +108,27 @@
 
 
 <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
 
-      function drawChart() {
+    function drawChart() {
 
         var data = google.visualization.arrayToDataTable([
           ['Task', 'Hours per Day'],
-          ['Relaxare',     52.60],
-          ['Plimbare',      47.39],
+          ['Relaxare', 52.60],
+          ['Plimbare', 47.39],
         ]);
 
         var options = {
-          title: 'My Daily Activities'
+            title: 'My Daily Activities',
+            chartArea: { width: 600, height: 300 },
+            backgroundColor: { fill: 'transparent' },
+            width: 500,
+            height: 400
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
-      }
+    }
 </script>
