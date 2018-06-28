@@ -12,13 +12,13 @@ using System.Web.Security;
 
 namespace AcTimer.Controllers
 {
-    class UserRoles
+    public class UserRoles
     {
         public IdentityUser User { get; set; }
         public IEnumerable<string> Roles { get; set; }
     }
 
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public class UsersController : AccountController
     {
         private AccountController _accountController = new AccountController();
@@ -38,13 +38,16 @@ namespace AcTimer.Controllers
             }
             return View(_userRoles);
         }
-
-        public ActionResult Delete(int? id)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Delete(string id)
         {
-            return View();
+            var user = _context.Users.Single(u => u.Id.Equals(id));
+            _context.Users.Remove(user);
+            _context.SaveChanges();
+            return RedirectToAction("Index","Users");
         }
 
-
+        [Authorize(Roles = "Admin")]
         public ActionResult New()
         {
             var viewModel = new RegisterAccountViewModel { Roles = _context.Roles.ToList() };
