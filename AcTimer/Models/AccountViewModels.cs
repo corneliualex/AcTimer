@@ -87,6 +87,7 @@ namespace AcTimer.Models
         [Required]
         [Display(Name = "Roles")]
         public string IdentityRoleId { get; set; }
+
         public IEnumerable<IdentityRole> Roles { get; set; }
     }
 
