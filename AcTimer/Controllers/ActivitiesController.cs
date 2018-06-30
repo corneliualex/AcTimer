@@ -22,12 +22,13 @@ namespace AcTimer.Controllers
         private ApplicationDbContext usersContext = new ApplicationDbContext();
 
         // GET: Activities
-        public ActionResult Index(int? categoryId, DateTime? date, string searchString)
+        public ActionResult Index(int? categoryId, DateTime? date)
         {
             var viewModel = new ActivityFiltersViewModel
             {
                 Activities = _activityRepository.GetAllForeachUser(),
                 Categories = _categoriesRepository.GetAll(),
+                CategoryId = categoryId
             };
 
             viewModel.Activities = GetActivitiesFiltered(viewModel.Activities, categoryId, date);
@@ -55,9 +56,17 @@ namespace AcTimer.Controllers
         {
             var activityIsDeleted = _activityRepository.IsDeleted(id);
             if (activityIsDeleted == false) return HttpNotFound();
-
+            
             return RedirectToAction("Index", "Activities");
         }
+
+        public ActionResult DeleteDashboard(int? id)
+        {
+            var activityIsDeleted = _activityRepository.IsDeleted(id);
+            if (activityIsDeleted == false) return HttpNotFound();
+            return RedirectToAction("Dashboard", "Activities");
+        }
+
 
         public ActionResult New()
         {
@@ -105,6 +114,11 @@ namespace AcTimer.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Stats()
+        {
+            return View();
+        }
+        #region Helpers
         private IEnumerable<Activity> GetActivitiesFiltered(IEnumerable<Activity> activities, int? categoryId, DateTime? date)
         {
 
@@ -149,6 +163,6 @@ namespace AcTimer.Controllers
 
             return activities;
         }
-
+        #endregion
     }
 }

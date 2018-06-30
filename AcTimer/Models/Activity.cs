@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -21,7 +22,7 @@ namespace AcTimer.Models
         public DateTime Date { get; set; }
 
         [Required]
-        [Display(Name ="Time spent")]
+        [Display(Name = "Time spent")]
         public TimeSpan TimeSpent { get; set; }
 
         //fk + nav prop => one to many. many activities have a category
@@ -32,5 +33,7 @@ namespace AcTimer.Models
         public Category Category { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
 
+        [NotMapped]
+        public Double TotalSpent { get { return TimeSpent.TotalHours; } }
     }
 }

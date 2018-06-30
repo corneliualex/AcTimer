@@ -26,6 +26,7 @@ namespace AcTimer.Models
     {
         public DbSet<Category> Categories { get; set; }
         public DbSet<Activity> Activities { get; set; }
+        public DbSet<IdentityUserRole> UserRoles { get; set; }
         //public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
         public ApplicationDbContext()

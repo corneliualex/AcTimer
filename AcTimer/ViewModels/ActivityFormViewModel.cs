@@ -48,6 +48,7 @@ namespace AcTimer.ViewModels
         {
             Id = activity.Id;
             Description = activity.Description;
+
             Date = activity.Date;
             TimeSpent = activity.TimeSpent;
 
