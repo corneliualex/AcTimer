@@ -56,16 +56,15 @@ namespace AcTimer.Controllers
         {
             var activityIsDeleted = _activityRepository.IsDeleted(id);
             if (activityIsDeleted == false) return HttpNotFound();
+            
+            return RedirectToAction("Index", "Activities");
+        }
 
-            if (User.IsInRole("Admin") | User.IsInRole("Moderator"))
-            {
-                return RedirectToAction("Dashboard", "Activities");
-            }
-            else
-            {
-                return RedirectToAction("Index", "Activities");
-            }
-
+        public ActionResult DeleteDashboard(int? id)
+        {
+            var activityIsDeleted = _activityRepository.IsDeleted(id);
+            if (activityIsDeleted == false) return HttpNotFound();
+            return RedirectToAction("Dashboard", "Activities");
         }
 
 

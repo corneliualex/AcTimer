@@ -27,9 +27,13 @@
                             <b>@(role + " ")</b>
                         }
                     </td>
+                    <td>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <a onclick="return confirm('Are sure wants to delete?');" href="@Url.Action("Delete",routeValues: new { @id = user.User.Id})"><span class="glyphicon glyphicon-remove"></span></a>
+                        }
 
-                    <td>@Html.ActionLink("Delete", "Delete", routeValues: new { @id = user.User.Id }, htmlAttributes: new { @onclick = "return confirm('Are sure wants to delete?');" })</td>
-
+                    </td>
                 </tr>
             }
 
