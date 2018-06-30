@@ -13,9 +13,4 @@ namespace AcTimer.Models
         public IEnumerable<ActivityDto> ActivitiesDto { get; set; }
     }
 
-    class PieStat
-    {
-        public string CategoryName { get; set; }
-        public double  AverageTime { get; set; }
-    }
 }
