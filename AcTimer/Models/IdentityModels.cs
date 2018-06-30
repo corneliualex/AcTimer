@@ -12,7 +12,7 @@ namespace AcTimer.Models
     {
         public ICollection<Category> Categories { get; set; }
         public ICollection<Activity> Activities { get; set; }
-        
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
